@@ -14,36 +14,36 @@ def prime_number(n):
 # print(prime_number(11))
 
 def substrings(binary, Number):
-    substrings = set()
     len_of_binary = len(binary)
+    prime_set = set()        ##altered to a set to remove duplicates of decimal numbers
 
+    ##Generation of substrings and simultenously convert them to decimals without storing them in a variable to reduce running time
     for i in range(len_of_binary):
-        substring = ""
+        decimal = 0
         for j in range(i, len_of_binary):
-            substring += binary[j]
-            substrings.add(substring)
+            ##to effectively handle errors
+            try:
+                decimal = decimal * 2 + int(binary[j])        #convert each substring to a decimal
 
-    decimal_substrings = set()
-    for sub in substrings:
-        try:
-            decimal = int(sub, 2)
-            decimal_substrings.add(decimal)
-        except ValueError:
-            return f"{0}: Invalid binary string."
-        except Exception as e:
-            print(f"An unexpected error occured: {e}")
-        
-    prime_list = []
+                if decimal > Number:        #break if the decimal is greater than the Number given to reduce running time
+                    break  
+                else:
+                    prime = prime_number(decimal)
 
-    for n in decimal_substrings:
-        prime = prime_number(n)
-        #print(prime)
+                #prime = prime_number(decimal)
 
-        if prime is None:
-            pass
+                if prime is None:
+                    pass
 
-        elif prime is not None and prime < Number:
-            prime_list.append(prime)
+                elif prime is not None and prime < Number:
+                    prime_set.add(decimal)
+
+            except ValueError:
+                return f"{0}: Invalid binary string."
+            except Exception as e:
+                print(f"An unexpected error occured: {e}")
+
+    prime_list = list(prime_set)
     prime_list.sort()
 
     if len(prime_list) > 6:
@@ -60,7 +60,7 @@ def substrings(binary, Number):
 
 
 start = time.time()
-print(substrings("010000110100111101001101010100000011000100111000001100010011100100100001", 123456789012345678))
+print(substrings("1111111111111111111111111111111111111111", 999999))
 end = time.time()
 total_time = end - start
 print(f"{total_time:.20f} seconds")
