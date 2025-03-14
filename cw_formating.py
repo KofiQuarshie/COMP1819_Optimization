@@ -15,17 +15,16 @@ def prime_number(n):
 
 def substrings(binary, Number):
     len_of_binary = len(binary)
-    prime_set = set()        ##altered to a set to remove duplicates of decimal numbers
+    prime_set = set()
 
-    ##Generation of substrings and simultenously convert them to decimals without storing them in a variable to reduce running time
+    ##Generation of substrings and simultenously convert them to decimals
     for i in range(len_of_binary):
         decimal = 0
         for j in range(i, len_of_binary):
-            ##to effectively handle errors
             try:
-                decimal = decimal * 2 + int(binary[j])        #convert each substring to a decimal
+                decimal = decimal * 2 + int(binary[j])
 
-                if decimal > Number:        #break if the decimal is greater than the Number given to reduce running time
+                if decimal > Number:
                     break  
                 else:
                     prime = prime_number(decimal)
